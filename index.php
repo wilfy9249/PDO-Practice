@@ -3,9 +3,6 @@
   //db connection class using singleton pattern
   class dbConn{
 
-       //variable to hold html
-       protected $html;
-
        //variable to hold connection object.
        protected static $db;
   
@@ -17,7 +14,7 @@
               self::$db = new PDO( 'mysql:host=sql1.njit.edu; dbname=wc335', 'wc335', 'ZxBEThIc' );
               self::$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
               echo "<h1> WEEK 7 : PDO-PRACTICE</h1>";
-              echo "1. Connection to the Database was successful";
+              echo "1. Connection to the Database was successful </br>";
          }
          
          catch (PDOException $e) {
@@ -50,7 +47,7 @@
 
     // 2. Count the number of records from the Query that is fetched
     $count = $statement->rowCount();
-    print("2. The number of records in the result is : "  .$count);
+    print("2. The number of records in the result is : "  .$count .'</br>');
 
     // 3. Display the Records in HTML Table
     while($result = $statement->fetch(PDO::FETCH_ASSOC)) {
@@ -59,6 +56,7 @@
 
     if ($count > 0) {
 
+        echo '</br> <h2>3. HTML TABLE: </h2>';
         echo "<table border=\"1\">
           <tr>
                <th>ID</th>
@@ -75,7 +73,7 @@
 
             echo "<tr>";
             echo "<td>" . $row["id"] . "</td>
-				  <td>" . $row["email"] . "</td>
+			      <td>" . $row["email"] . "</td>
                   <td>" . $row["fname"] . "</td>
                   <td>" . $row["lname"] . "</td>
                   <td>" . $row["phone"] . "</td>
