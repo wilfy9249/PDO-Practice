@@ -2,7 +2,10 @@
 
   //db connection class using singleton pattern
   class dbConn{
- 
+
+       //variable to hold html
+       protected $html;
+
        //variable to hold connection object.
        protected static $db;
   
@@ -11,9 +14,10 @@
    
          try {
               // assign PDO object to db variable
-              self::$db = new PDO( 'mysql:host=sql1.njit.edu;dbname=wc335', 'wc335', 'ZxBEThIc' );
+              self::$db = new PDO( 'mysql:host=sql1.njit.edu; dbname=wc335', 'wc335', 'ZxBEThIc' );
               self::$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-              echo 'Connection Successful </br>';
+              echo "<h1> WEEK 7 : PDO-PRACTICE</h1>";
+              echo "1. Connection to the Database was successful";
          }
          
          catch (PDOException $e) {
@@ -43,21 +47,19 @@
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $statement = $db->prepare('SELECT * from accounts WHERE id < 6');
     $statement->execute();
-    $count = $statement->rowCount();
-    print("The number of records in the result is : "  .$count);
-    
-    
-    //while() {
-           
-        
-        //print_r($results);               
- //}   
 
-$result = $statement->fetch(PDO::FETCH_OBJ);
-$results[] = $result;
- if($count > 0){
-    
-          echo "<table border=\"1\">
+    // 2. Count the number of records from the Query that is fetched
+    $count = $statement->rowCount();
+    print("2. The number of records in the result is : "  .$count);
+
+    // 3. Display the Records in HTML Table
+    while($result = $statement->fetch(PDO::FETCH_ASSOC)) {
+          $results[] = $result;
+    }
+
+    if ($count > 0) {
+
+        echo "<table border=\"1\">
           <tr>
                <th>ID</th>
                <th>Email</th>
@@ -68,32 +70,23 @@ $results[] = $result;
                <th>Gender</th>
                <th>Password</th>
           </tr>";
-		  
-		  //print_r($results);
-		  
-		  
-		  echo "<tr>";
-		  foreach ($result as $row) {
-                       echo "<td>".$row["id"]."</td>
-							 <td>".$row["email"]."</td>
-                             <td>".$row["fname"]."</td>
-                             <td>".$row["lname"]."</td>
-                             <td>".$row["phone"]."</td>
-                             <td>".$row["birthday"]."</td>
-                             <td>".$row["gender"]."</td>
-                             <td>".$row["password"]."</td>";
-		  }
-           echo "</tr>";
-	}
-    
 
-    else {
-        echo '0 results';
+        foreach ($results as $row) {
+
+            echo "<tr>";
+            echo "<td>" . $row["id"] . "</td>
+				  <td>" . $row["email"] . "</td>
+                  <td>" . $row["fname"] . "</td>
+                  <td>" . $row["lname"] . "</td>
+                  <td>" . $row["phone"] . "</td>
+                  <td>" . $row["birthday"] . "</td>
+                  <td>" . $row["gender"] . "</td>
+                  <td>" . $row["password"] . "</td>";
+            echo "</tr>";
+        }
+
+    } else {
+        echo 'No records found';
     }
-	
-	//foreach ($result as $row) {
-		           
-                      
-           //echo "</table>";
-       // } 
+
 ?>
